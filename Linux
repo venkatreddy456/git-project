@@ -1,0 +1,244 @@
+Linux Interview Questions and Answers
+1. Linux Basics
+1. What is Linux?
+Linux is an open-source operating system. We use Linux to host applications, manage servers, and run DevOps tools such as Docker, Jenkins, and Kubernetes.
+2. Why do we use Linux?
+We use Linux because it is stable, secure, lightweight, and suitable for running applications, automation scripts, and cloud infrastructure.
+3. What is a Linux kernel?
+The kernel is the core component of Linux. It manages CPU, memory, devices, processes, and communication between hardware and software.
+4. What is a shell?
+A shell is a command-line interpreter that accepts commands from users and passes them to the operating system for execution.
+Examples: Bash, Zsh, and Sh.
+5. What is a terminal?
+A terminal is an interface where we enter commands and view their output. We use a terminal to interact with a shell.
+6. What is the difference between a shell and a terminal?
+A terminal provides the interface for entering commands, whereas a shell interprets and executes those commands.
+7. What is the root user?
+The root user is the superuser in Linux. It has administrative privileges to manage files, users, services, and system configurations.
+8. What is sudo?
+We use sudo to execute commands with elevated privileges when authorized.
+sudo systemctl restart nginx
+
+
+9. What is a Linux distribution?
+A Linux distribution is an operating system built using the Linux kernel and additional software packages.
+Examples: Ubuntu, Red Hat Enterprise Linux, Debian, and Amazon Linux.
+10. What is the difference between Linux and Unix?
+Linux is an open-source Unix-like operating system, whereas Unix refers to a family of operating systems that includes commercial and certified implementations.
+2. Linux File and Directory Commands
+11. How do we check the current directory?
+pwd
+
+
+We use pwd to display the current working directory.
+12. How do we list files?
+ls
+ls -l
+ls -la
+
+
+We use ls to list files and directories, including detailed information and hidden files when required.
+13. How do we create a directory?
+mkdir devops
+mkdir -p project/logs
+
+
+We use mkdir to create directories.
+14. How do we create a file?
+touch file.txt
+
+
+We use touch to create an empty file if it does not exist or update its timestamps if it does.
+15. How do we copy a file?
+cp file.txt backup.txt
+
+
+We use cp to copy files and directories.
+16. How do we move or rename a file?
+mv old.txt new.txt
+
+
+We use mv to move or rename files and directories.
+17. How do we delete a file?
+rm file.txt
+
+
+We use rm to remove files. We should verify the target before using destructive commands.
+18. How do we find a file?
+find /var/log -name "*.log"
+
+
+We use find to search for files and directories based on their names, permissions, types, and other criteria.
+19. How do we read a file?
+cat file.txt
+less file.txt
+head file.txt
+tail file.txt
+
+
+We use these commands to display file contents. less is useful for large files, and tail is useful for checking recent log entries.
+20. How do we monitor logs in real time?
+tail -f /var/log/syslog
+
+
+We use tail -f to follow new log entries as they are written. The log path varies by Linux distribution and application.
+3. Linux Users and Permissions
+21. How do we create a new user?
+sudo useradd -m venkat
+sudo passwd venkat
+
+
+We use useradd to create a user and passwd to set the user's password.
+22. How do we check which user we are using?
+whoami
+
+
+We use whoami to display the effective username.
+23. How do we check user information?
+id venkat
+
+
+We use id to display a user's UID, primary group, and supplementary groups.
+24. How do we add a user to a group?
+sudo usermod -aG docker venkat
+
+
+We use usermod -aG to add a user to a supplementary group without removing existing supplementary group memberships.
+25. Where is user information stored in Linux?
+- /etc/passwd — user account information.
+- /etc/shadow — password hashes and password-aging information.
+- /etc/group — group information.
+26. What is chmod?
+We use chmod to change file and directory permissions.
+chmod 755 script.sh
+chmod 644 file.txt
+
+
+27. What is chown?
+We use chown to change the owner and optionally the group of a file or directory.
+sudo chown venkat:devops file.txt
+
+
+28. What is the difference between chmod and chown?
+chmod changes permissions, whereas chown changes file ownership.
+29. What are the Linux file permissions?
+Linux permissions are:
+- r — read
+- w — write
+- x — execute
+For example, 755 means the owner has read, write, and execute permissions, while the group and others have read and execute permissions.
+30. What is the difference between a hard link and a soft link?
+A hard link refers to the same underlying file data, while a soft link (symbolic link) points to a pathname.
+ln file.txt hardlink.txt
+ln -s file.txt softlink.txt
+
+
+4. Linux Process Management
+31. What is a process?
+A process is a running instance of a program. We monitor processes to troubleshoot application issues and resource consumption.
+32. What is a PID?
+PID stands for Process ID. Linux assigns a unique process identifier to each process while it exists.
+ps -ef
+
+
+33. What is PID 1?
+PID 1 is the first userspace process in a typical Linux system. On many Linux distributions, it is systemd, which manages services and system startup.
+34. What is a zombie process?
+A zombie process has finished executing, but its parent has not yet collected its exit status. It remains as an entry in the process table.
+35. What is the difference between foreground and background processes?
+A foreground process runs interactively in the terminal. A background process runs without holding the terminal's foreground, allowing us to continue using it.
+sleep 100
+sleep 100 &
+jobs
+
+
+36. How do we check running processes?
+ps -ef
+top
+
+
+We use ps to view process information and top to monitor processes and system resource usage interactively.
+37. How do we stop a process?
+kill <PID>
+kill -9 <PID>
+
+
+We normally use kill first to request graceful termination. kill -9 sends SIGKILL and should be used only when necessary.
+38. How do we check CPU and memory usage?
+top
+free -h
+vmstat 1
+
+
+We use these commands to investigate resource utilization and system performance.
+39. What is load average?
+Load average represents the average number of tasks that are runnable or waiting for certain resources over periods of 1, 5, and 15 minutes. We interpret it alongside CPU core count and other performance metrics.
+uptime
+
+
+40. How do we check disk usage?
+df -h
+du -sh /var/log
+
+
+We use df -h to check filesystem capacity and du -sh to estimate disk space used by a directory.
+5. Linux Networking and Services
+41. How do we check the IP address?
+ip addr
+
+
+We use ip addr to display network interfaces and their IP addresses.
+42. How do we test connectivity?
+ping google.com
+
+
+We use ping to test network reachability, where ICMP traffic is permitted.
+43. How do we check listening ports?
+ss -tulnp
+
+
+We use ss to inspect network sockets and listening ports. Some process details require elevated privileges.
+44. How do we check a service status?
+sudo systemctl status nginx
+
+
+We use systemctl to check and manage services on systems that use systemd.
+45. How do we restart a service?
+sudo systemctl restart nginx
+sudo systemctl enable nginx
+
+
+We use restart to restart a service and enable to configure it to start automatically at boot.
+6. Linux Troubleshooting Scenarios
+46. A server is running slowly. How do we troubleshoot it?
+We check CPU, memory, disk utilization, system load, running processes, and application logs. Based on the findings, we identify the bottleneck and take corrective action.
+top
+free -h
+df -h
+uptime
+
+
+47. A disk is full. How do we troubleshoot it?
+We check filesystem usage, identify large directories and files, inspect logs, and safely remove or rotate unnecessary data.
+df -h
+du -xhd1 /var
+
+
+48. An application is not starting. What do we check?
+We check the service status, application logs, configuration files, permissions, port availability, and required dependencies.
+sudo systemctl status nginx
+sudo journalctl -u nginx -n 100 --no-pager
+
+
+49. A process is consuming high CPU. What do we do?
+We identify the process using top or ps, examine its logs and behavior, and determine whether the cause is a code issue, excessive workload, or another resource bottleneck before taking corrective action.
+ps -eo pid,comm,%cpu,%mem --sort=-%cpu | head
+
+
+50. How do we schedule a recurring task in Linux?
+We use cron to schedule recurring tasks such as log cleanup, backups, and maintenance scripts.
+crontab -e
+
+
+Example: run a script every day at 2:00 AM.
+0 2 * * * /home/venkat/backup.sh
