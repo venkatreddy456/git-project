@@ -1,1 +1,279 @@
-this is my git file
+Git Interview Questions
+
+. What is Git?
+Git is a distributed version control system used to track code changes and manage source code. We use Git to collaborate with developers, maintain code history, and revert changes when required.
+
+2. Why do we use Git?
+We use Git to track code changes, maintaindifferent versions of source code, collaborate with team members, and roll back to previous versions when required.
+3. What is a Version Control System (VCS)?
+A Version Control System tracks changes in files over time. It helps us maintain code history, compare changes, and collaborate with multiple developers.
+4. What is the difference between Git and GitHub?
+- Git: A version control tool used to track code changes.
+- GitHub: A cloud-based platform used to host Git repositories and collaborate with developers.
+5. What is a Git repository?
+A Git repository is a location where Git stores project files, commit history, branches, and other version-control information.
+There are two main types:
+- Local repository
+- Remote repository
+6. What is the difference between local and remote repositories?
+A local repository is stored on our computer, whereas a remote repository is hosted on a server or platform such as GitHub, GitLab, or Bitbucket.
+7. What is git init?
+We use git init to initialize a new Git repository in a project directory.
+git init
+
+
+8. What is git clone?
+We use git clone to download a remote repository, including its tracked files and Git history, to our local machine.
+git clone https://github.com/user/project.git
+
+
+9. What is git status?
+We use git status to check the current branch and identify modified, staged, untracked, or other relevant file changes.
+git status
+
+
+10. What is git config?
+We use git config to configure Git settings, such as the username, email, and default editor.
+git config --global user.name "Venkat"
+git config --global user.email "venkat@example.com"
+
+
+2. Git Commands – Frequently Asked Questions
+11. What is git add?
+We use git add to stage changes before committing them.
+git add file.txt
+git add .
+
+
+12. What is git commit?
+We use git commit to save staged changes as a snapshot in the local repository.
+git commit -m "Added login functionality"
+
+
+13. What is git push?
+We use git push to upload local commits to a remote repository.
+git push origin main
+
+
+14. What is git pull?
+We use git pull to fetch changes from a remote repository and integrate them into our current branch.
+git pull origin main
+
+
+15. What is git fetch?
+We use git fetch to download new commits and references from a remote repository without automatically merging them into our current branch.
+git fetch origin
+
+
+16. What is the difference between git fetch and git pull?
+Git fetch	Git pull
+Downloads remote updates.	Downloads and integrates remote updates.
+Does not merge into the current branch automatically.	Usually merges; can be configured to rebase.
+Lets us review changes first.	Helps us update our current branch directly.
+17. What is git log?
+We use git log to view commit history, including commit IDs, authors, dates, and messages.
+git log
+git log --oneline
+
+
+18. What is git diff?
+We use git diff to compare changes between files, commits, and Git states.
+git diff
+git diff --staged
+
+
+19. What is git show?
+We use git show to inspect details of a specific commit, including its metadata and changes.
+git show HEAD
+
+
+20. What is git rm?
+We use git rm to remove a tracked file from the working directory and stage its deletion.
+git rm file.txt
+
+
+3. Git Branching and Merging
+21. What is a Git branch?
+A branch is an independent line of development. We use branches to develop features, fix bugs, and test changes without directly modifying the main branch.
+git branch
+git switch -c feature-login
+
+
+22. What is the difference between git branch and git switch?
+- git branch lists, creates, or deletes branches.
+- git switch changes the current branch or creates and switches to a new branch.
+git branch feature-login
+git switch feature-login
+
+
+23. What is git merge?
+We use git merge to integrate changes from one branch into another.
+git switch main
+git merge feature-login
+
+
+24. What is a merge conflict?
+A merge conflict occurs when Git cannot automatically reconcile changes, often because different branches modify the same part of a file.
+How do we resolve it?
+1. Identify the conflicted files.
+2. Open the files and resolve the conflicting sections.
+3. Stage the resolved files.
+4. Complete the merge commit if required.
+git status
+git add file.txt
+git commit
+
+
+25. What is the difference between merge and rebase?
+- Merge: Integrates branch changes and may create a merge commit.
+- Rebase: Replays commits on top of another base commit, creating new commit IDs for the replayed commits.
+We generally use merge when we want to preserve the branch integration history. We use rebase when we want a more linear history, taking care not to rewrite shared commits.
+26. What is a fast-forward merge?
+A fast-forward merge happens when the target branch has no new divergent commits, so Git can move its branch pointer forward without creating a merge commit.
+27. What is a pull request?
+A pull request is a request to review and integrate changes from one branch into another. We use pull requests for code reviews, testing, approvals, and controlled integration.
+4. Git Reset, Revert, Restore, and Stash
+28. What is git reset?
+We use git reset to move the current branch reference and, depending on the option, change the staging area or working directory.
+git reset --soft HEAD~1
+git reset --mixed HEAD~1
+git reset --hard HEAD~1
+
+
+- --soft: Keeps changes staged.
+- --mixed: Keeps changes in the working directory but unstages them.
+- --hard: Resets tracked working files and staging to the target commit; uncommitted changes can be lost.
+29. What is git revert?
+We use git revert to create a new commit that reverses the changes introduced by an earlier commit.
+git revert <commit-id>
+
+
+It is generally safer than resetting shared history because it preserves existing commits.
+30. What is the difference between reset and revert?
+Reset	Revert
+Moves the current branch reference.	Creates a new commit that reverses changes.
+Can rewrite local history.	Preserves existing history.
+Useful for local cleanup.	Useful for safely undoing shared changes.
+31. What is git restore?
+We use git restore to discard working-tree changes or restore files from a specified source.
+git restore file.txt
+git restore --staged file.txt
+
+
+The first command discards unstaged changes to the file. The second unstages the file while keeping its working-tree contents.
+32. What is git stash?
+We use git stash to temporarily save changes that we are not ready to commit.
+git stash
+git stash list
+git stash pop
+git stash apply
+
+
+- pop: Applies the stash and removes it from the stash list if successfully applied.
+- apply: Applies the stash but keeps it in the stash list.
+33. How do we recover a deleted file?
+If the deletion is not committed, we can restore the file from the current index or commit.
+git restore file.txt
+
+
+If the deletion has already been committed, we can restore the version from an earlier commit:
+git restore --source=<commit-id> -- file.txt
+git add file.txt
+git commit -m "Restore deleted file"
+
+
+5. Advanced Git Interview Questions
+34. What is HEAD in Git?
+HEAD is a reference to our current checkout, usually the current branch. It identifies the commit we are working from.
+35. What is a Git tag?
+A Git tag is a reference used to identify a specific commit, commonly for software releases.
+git tag v1.0
+git tag -a v1.0 -m "Release version 1.0"
+git push origin v1.0
+
+
+36. What is git cherry-pick?
+We use git cherry-pick to apply the changes from a specific commit onto our current branch.
+git cherry-pick <commit-id>
+
+
+For example, we can apply a bug fix from a development branch to a release branch without merging the entire development branch.
+37. What is git rebase -i?
+Interactive rebase allows us to edit, reorder, squash, reword, or drop commits.
+git rebase -i HEAD~3
+
+
+We commonly use it to clean up local commit history before submitting a pull request.
+38. What is git reflog?
+We use git reflog to view the history of changes to local Git references, such as where HEAD pointed previously.
+git reflog
+
+
+It can help us recover commits after an accidental reset or branch movement, provided the relevant objects have not been removed by garbage collection.
+39. What is a detached HEAD state?
+A detached HEAD occurs when we check out a commit directly instead of checking out a branch. We can inspect or test that commit, but new commits may not belong to a named branch unless we create one.
+git switch --detach <commit-id>
+git switch -c recovery-branch
+
+
+40. What is .gitignore?
+The .gitignore file specifies intentionally untracked files that Git should ignore, such as logs, build outputs, and local configuration files.
+Example:
+*.log
+target/
+node_modules/
+.env
+
+
+It does not automatically stop tracking files that are already tracked.
+41. What is a Git remote?
+A remote is a named reference to another repository, commonly a repository hosted on GitHub or GitLab.
+git remote -v
+git remote add origin https://github.com/user/project.git
+
+
+42. What is the difference between origin and upstream?
+- origin commonly refers to the remote repository we cloned from or our own repository.
+- upstream commonly refers to the original project repository when we work with a fork.
+These are conventional names; Git does not require them.
+43. What is a shallow clone?
+A shallow clone downloads a repository with limited commit history, which can reduce download time and storage requirements.
+git clone --depth 1 https://github.com/user/project.git
+
+
+44. What is a Git hook?
+Git hooks are scripts that run automatically at specific Git events, such as before a commit or after a push. We use them to automate checks and enforce development standards.
+45. What is the difference between git pull --rebase and git pull?
+git pull normally fetches and merges remote changes. git pull --rebase fetches and rebases local commits on top of the updated remote branch instead of creating a merge commit in the usual case.
+git pull --rebase origin main
+
+
+6. Real-Time Git Scenarios for DevOps Interviews
+46. A developer committed code to the wrong branch. How do we fix it?
+We first check whether the commit has been pushed and whether the changes are shared. If it is a local commit, we can create the correct branch at that commit and then restore the original branch carefully.
+git branch feature-login
+git switch feature-login
+
+
+If the commit has already been pushed or shared, we coordinate with the team before rewriting history.
+47. How do we undo the last commit but keep the changes?
+We use git reset with the appropriate option depending on whether we want the changes staged.
+git reset --soft HEAD~1
+
+
+This removes the last commit from the current branch while keeping its changes staged.
+48. How do we find which commit introduced a bug?
+We inspect the commit history and can use git bisect to narrow down the commit that introduced the issue.
+git bisect start
+git bisect bad
+git bisect good <known-good-commit>
+
+
+We test the commits Git checks out and mark them good or bad until Git identifies the likely problematic commit. Finish with:
+git bisect reset
+
+
+49. A developer accidentally committed a password. What do we do?
+We immediately rotate or revoke the exposed credential, remove it from active configuration, and check for unauthorized use. We then remove the secret from the repository and, when necessary, rewrite repository history and coordinate with collaborators. We do not rely on deleting the file in a later commit alone.
+50. How do we handle a merge conflict in a CI/CD pipeline?
+We inspect the failed job logs and identify the conflicting branches or files. We resolve the conflict in the source repository, validate the changes, run tests, and rerun the pipeline. We avoid automatically choosing one side unless the correct resolution is known.
